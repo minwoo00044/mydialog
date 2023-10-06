@@ -6,25 +6,27 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
-    private Dictionary<int, string> _totalData = new Dictionary<int, string>();
+    private Dictionary<string, int> _nameIDPairData = new Dictionary<string, int>();
+    private Dictionary<int, Dictionary<int, string>> _IDSentencePairData = new Dictionary<int, Dictionary<int, string>>();
     private void Awake()
     {
         instance = this;
-
+        InitNameIDPair();
+        LoadIDSentencePairData();
     }
     private void Start()
     {
-        _totalData.Add(1000, "\"크아아아아\"\r\n\r\n드래곤중에서도 최강의 투명드래곤이 울부짓었다");
-        _totalData.Add(1001, "투명드래곤은 졸라짱쎄서 드래곤중에서 최강이엇다\r\n신이나 마족도 이겼따 다덤벼도 이겼따 투명드래곤은\r\n새상에서 하나였다 어쨌든 걔가 울부짓었다");
-        _totalData.Add(1002, "\"으악 제기랄 도망가자\"\r\n\r\n발록들이 도망갔다 투명드래곤이 짱이었따\r\n그래서 발록들은 도망간 것이다\r\n\r\n꼐속");
-        _totalData.Add(1003, "후술할 초초초초나 졸라 짱 쎈 등의 수식어들은 모두 여기 나무위키의 유머적 서술이 아닌 투명드래곤 본문에서 발췌한 것이다.");
-        _totalData.Add(1103, "후dddddddd dk앟라ㅡㅠㅡㅠㅠㅡㅠㅡㅀ라라라ㅏ.");
+
     }
-    public IEnumerable<KeyValuePair<int, string>> DataProcess(int _id)
+    public IEnumerable<KeyValuePair<int, string>> DataProcess(string _name, int _questId)
     {
+        int _id = GetId(_name);
+        if (_id == -1)
+            return null;
+        Dictionary<int, string> _currentDialog = new Dictionary<int, string>(_IDSentencePairData[_id]);
         List<KeyValuePair<int, string>> groupedData = new List<KeyValuePair<int, string>>();
-        int hundKey = _id / 100;
-        foreach (var entry in _totalData)
+        int hundKey = _questId / 100;
+        foreach (var entry in _currentDialog)
         {
             if (entry.Key / 100 == hundKey)
             {
@@ -32,5 +34,71 @@ public class DataManager : MonoBehaviour
             }
         }
         return groupedData;
+    }
+    public void InitNameIDPair()
+    {
+        //_nameIDPairData.Add("NPC0", 1000);
+        //반복문 돌려서 데이터 받아서 저장하자구
+        TextAsset data = Resources.Load("NamdIDPairData") as TextAsset;
+        string[] dataLines = data.text.Split('\n');
+
+        for (int i = 0; i < dataLines.Length; i++)
+        {
+            string[] lineData = dataLines[i].Split(',');
+
+            if (lineData.Length < 2) continue; // 데이터가 없는 줄을 건너뜁니다.
+
+            string name = lineData[0];
+            if (!int.TryParse(lineData[1], out int id))
+            {
+                Debug.Log("Invalid ID at line " + (i + 1));
+                continue;
+            }
+            _nameIDPairData[name] = id;
+        }
+    }
+    public int GetId(string _name)
+    {
+        return (_nameIDPairData.ContainsKey(_name)) ? _nameIDPairData[_name] : -1;
+    }
+    void LoadIDSentencePairData()
+    {
+        TextAsset data = Resources.Load("OtherCSV") as TextAsset; // 다른 CSV 파일 로드
+
+        string[] lines = data.text.Split('\n');
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var parts = lines[i].Split(',');
+
+            if (parts.Length < 3) continue; // 라인의 부분이 충분하지 않으면 건너뜀
+
+            var nameKeyPart = parts[0];
+
+            var innerKeyPart = parts[1];
+
+            if (!int.TryParse(innerKeyPart, out int innerKey))
+            {
+                Debug.Log($"Invalid Inner Key on Line {i + 1}");
+                continue;
+            }
+
+            var valuePart = parts[parts.Length - 1]; // 마지막 부분을 값으로 사용
+
+            int outerKey = GetId(nameKeyPart);
+
+            if (outerKey == -1)
+            {
+                Debug.Log($"Invalid Outer Key on Line {i + 1}");
+                continue;
+            }
+
+            if (!_IDSentencePairData.ContainsKey(outerKey))
+            {
+                _IDSentencePairData.Add(outerKey, new Dictionary<int, string>());
+            }
+
+            _IDSentencePairData[outerKey][innerKey] = valuePart;
+        }
     }
 }

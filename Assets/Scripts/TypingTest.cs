@@ -12,14 +12,14 @@ public class TypingTest : MonoBehaviour
 
     [SerializeField] int index;
     private int _datasCount;
-    private float txtSpeed;
+    [SerializeField] private float txtSpeed;
     private WaitForSeconds waitForSeconds;
     private Tweener _currentTween;
     const float ORIGIN_SPEED = 6f;
 
     IEnumerator _currentCoroutine;
 
-    private Dictionary<int, string> _IdSentencePair = new Dictionary<int, string>();
+    private Dictionary<int, string> _currentIdSentencePair = new Dictionary<int, string>();
     [SerializeField]int key;
     private void Awake()
     {
@@ -31,15 +31,18 @@ public class TypingTest : MonoBehaviour
         txtSpeed = ORIGIN_SPEED;
         waitForSeconds = new WaitForSeconds(txtSpeed + 0.5f);
     }
-    public void StartDialog(int npcId, int QuestId, int sentenceCount, Dictionary<int, string> datas_origin)
+    public void StartDialog(int questId, int sentenceCount, Dictionary<int, string> datas_origin)
     {
-        _IdSentencePair.Clear();
-        _IdSentencePair = datas_origin;
+        KillTweenAndStopCoroutine();
+
+        text.text = string.Empty;
+        _currentIdSentencePair.Clear();
+        _currentIdSentencePair = datas_origin;
         index = 0;
         _datasCount = sentenceCount;
 
-        key = npcId + QuestId;
-        _currentCoroutine = DialogRead(_IdSentencePair[key]);
+        key = questId + index;
+        _currentCoroutine = DialogRead(_currentIdSentencePair[key]);
         StartCoroutine(_currentCoroutine);
     }
     IEnumerator DialogRead(string data)
@@ -56,12 +59,13 @@ public class TypingTest : MonoBehaviour
         if (index >= _datasCount)
         {
             index = 0;
+            key = 0;
             return;
         }
         if (_currentCoroutine != null)
         {
             StopCoroutine(_currentCoroutine);
-            _currentCoroutine = DialogRead(_IdSentencePair[key]);
+            _currentCoroutine = DialogRead(_currentIdSentencePair[key]);
             StartCoroutine(_currentCoroutine);
         }
     }
@@ -74,14 +78,14 @@ public class TypingTest : MonoBehaviour
         if (_currentTween != null && _currentTween.IsActive() && !_currentTween.IsComplete())
         {
             string currentText = text.text; // 현재 텍스트 스냅샷
-            _currentTween?.Kill(); // 현재 트윈 종료
+            _currentTween?.Kill(); // 현재 트윈 종료 체인지 스피드만 텍스트를 비우지 않기 때문에 예외적으로 처리
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
 
-            float remainingRatio = (float)(_IdSentencePair[key].Length - currentText.Length) / _IdSentencePair[key].Length;
+            float remainingRatio = (float)(_currentIdSentencePair[key].Length - currentText.Length) / _currentIdSentencePair[key].Length;
             // 남아 있는 문자열 비율 계산
 
-            _currentTween = text.DOText(_IdSentencePair[key].Substring(currentText.Length), txtSpeed * remainingRatio)
+            _currentTween = text.DOText(_currentIdSentencePair[key].Substring(currentText.Length), txtSpeed * remainingRatio)
                 .SetRelative()
                 .SetDelay(0.1f)
                 .OnComplete(() =>
@@ -100,32 +104,42 @@ public class TypingTest : MonoBehaviour
 
     public void SkipAndNextDIalog()
     {
-        if (index == _datasCount - 1)
+        if (index == _datasCount - 1 || _currentIdSentencePair.Count == 0)
         {
             return;
         }
         index++;
         key += 1;
-        _currentTween?.Kill();
-        text.text = string.Empty;
-        if (_currentCoroutine != null)
-            StopCoroutine(_currentCoroutine);
 
-        _currentCoroutine = DialogRead(_IdSentencePair[key]);
+        KillTweenAndStopCoroutine();
+
+        text.text = "";
+
+        _currentCoroutine = DialogRead(_currentIdSentencePair[key]);
         StartCoroutine(_currentCoroutine);
     }
     public void SkipAndPrevDIalog()
     {
         if (index == 0)
             return;
-        _currentTween?.Kill();
+        KillTweenAndStopCoroutine();
         text.text = string.Empty;
         index--;
         key -= 1;
-        if (_currentCoroutine != null)
-            StopCoroutine(_currentCoroutine);
+  
 
-        _currentCoroutine = DialogRead(_IdSentencePair[key]);
+        _currentCoroutine = DialogRead(_currentIdSentencePair[key]);
         StartCoroutine(_currentCoroutine);
+    }
+    void KillTweenAndStopCoroutine()
+    {
+        if (_currentTween != null)
+        {
+            _currentTween.Kill();
+            _currentTween = null;
+
+            if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+            text.text = string.Empty;
+        }
     }
 }

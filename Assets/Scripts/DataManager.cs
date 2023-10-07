@@ -6,12 +6,11 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
-    private Dictionary<string, int> _nameIDPairData = new Dictionary<string, int>();
-    private Dictionary<int, Dictionary<int, string>> _IDSentencePairData = new Dictionary<int, Dictionary<int, string>>();
+    //private Dictionary<string, int> _nameIDPairData = new Dictionary<string, int>();
+    private Dictionary<string, Dictionary<int, string>> _IDSentencePairData = new Dictionary<string, Dictionary<int, string>>();
     private void Awake()
     {
         instance = this;
-        InitNameIDPair();
         LoadIDSentencePairData();
     }
     private void Start()
@@ -20,10 +19,7 @@ public class DataManager : MonoBehaviour
     }
     public IEnumerable<KeyValuePair<int, string>> DataProcess(string _name, int _questId)
     {
-        int _id = GetId(_name);
-        if (_id == -1)
-            return null;
-        Dictionary<int, string> _currentDialog = new Dictionary<int, string>(_IDSentencePairData[_id]);
+        Dictionary<int, string> _currentDialog = new Dictionary<int, string>(_IDSentencePairData[_name]);
         List<KeyValuePair<int, string>> groupedData = new List<KeyValuePair<int, string>>();
         int hundKey = _questId / 100;
         foreach (var entry in _currentDialog)
@@ -34,32 +30,6 @@ public class DataManager : MonoBehaviour
             }
         }
         return groupedData;
-    }
-    public void InitNameIDPair()
-    {
-        //_nameIDPairData.Add("NPC0", 1000);
-        //반복문 돌려서 데이터 받아서 저장하자구
-        TextAsset data = Resources.Load("NamdIDPairData") as TextAsset;
-        string[] dataLines = data.text.Split('\n');
-
-        for (int i = 0; i < dataLines.Length; i++)
-        {
-            string[] lineData = dataLines[i].Split(',');
-
-            if (lineData.Length < 2) continue; // 데이터가 없는 줄을 건너뜁니다.
-
-            string name = lineData[0];
-            if (!int.TryParse(lineData[1], out int id))
-            {
-                Debug.Log("Invalid ID at line " + (i + 1));
-                continue;
-            }
-            _nameIDPairData[name] = id;
-        }
-    }
-    public int GetId(string _name)
-    {
-        return (_nameIDPairData.ContainsKey(_name)) ? _nameIDPairData[_name] : -1;
     }
     void LoadIDSentencePairData()
     {
@@ -85,9 +55,9 @@ public class DataManager : MonoBehaviour
 
             var valuePart = parts[parts.Length - 1]; // 마지막 부분을 값으로 사용
 
-            int outerKey = GetId(nameKeyPart);
+            string outerKey = nameKeyPart;
 
-            if (outerKey == -1)
+            if (outerKey == null)
             {
                 Debug.Log($"Invalid Outer Key on Line {i + 1}");
                 continue;
@@ -102,3 +72,29 @@ public class DataManager : MonoBehaviour
         }
     }
 }
+    //public void InitNameIDPair()
+    //{
+    //    //_nameIDPairData.Add("NPC0", 1000);
+    //    //반복문 돌려서 데이터 받아서 저장하자구
+    //    TextAsset data = Resources.Load("NamdIDPairData") as TextAsset;
+    //    string[] dataLines = data.text.Split('\n');
+
+    //    for (int i = 0; i < dataLines.Length; i++)
+    //    {
+    //        string[] lineData = dataLines[i].Split(',');
+
+    //        if (lineData.Length < 2) continue; // 데이터가 없는 줄을 건너뜁니다.
+
+    //        string name = lineData[0];
+    //        if (!int.TryParse(lineData[1], out int id))
+    //        {
+    //            Debug.Log("Invalid ID at line " + (i + 1));
+    //            continue;
+    //        }
+    //        _nameIDPairData[name] = id;
+    //    }
+    //}
+    //public int GetId(string _name)
+    //{
+    //    return (_nameIDPairData.ContainsKey(_name)) ? _nameIDPairData[_name] : -1;
+    //}

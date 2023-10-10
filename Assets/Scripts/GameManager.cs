@@ -6,11 +6,14 @@ using UnityEngine.VFX;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager instance;
     [SerializeField] Image backGround;
+    [SerializeField] Sprite startImg;
+    [SerializeField] GameObject interactiveCanvas;
     private void Awake()
     {
-        Instance = this;
+        instance = this;
+        //interactiveCanvas.SetActive(false);
     }
 
     public void ChangeBackGround(Sprite nextImg)

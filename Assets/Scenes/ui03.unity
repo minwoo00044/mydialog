@@ -612,7 +612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9e66bbf848a4d41a686486e27b2684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGround: {fileID: 0}
+  backGround: {fileID: 888629810}
+  startImg: {fileID: 21300000, guid: 2dde7273508e3cc41b5b7f8ec7c264e7, type: 3}
+  interactiveCanvas: {fileID: 2027105389}
 --- !u!4 &578962599
 Transform:
   m_ObjectHideFlags: 0
@@ -620,6 +622,51 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578962597}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.029827, y: -0.11915447, z: 48.50879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &606505726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 606505728}
+  - component: {fileID: 606505727}
+  m_Layer: 0
+  m_Name: NPCManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &606505727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606505726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba85a430937b5049a63d4ae7ad2057b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NPC: {fileID: 0}
+--- !u!4 &606505728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606505726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.029827, y: -0.11915447, z: 48.50879}
@@ -973,7 +1020,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5f489bf7cb7d73942a1246d80221ad86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dde7273508e3cc41b5b7f8ec7c264e7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1159,8 +1206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3870fdf59bb624e9e1984622b8cd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: Friend
-  questId: 0
 --- !u!212 &1283965533
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1574,6 +1619,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1419460638}
   m_CullTransparentMesh: 1
+--- !u!1 &1419752785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419752787}
+  - component: {fileID: 1419752786}
+  m_Layer: 0
+  m_Name: StageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1419752786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419752785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c882055192943be4c885217c28d517fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageIndex: 0
+  stages:
+  - {fileID: 11400000, guid: 4ef40169b1384af4d88157fee260c6a8, type: 2}
+  currentStage: {fileID: 11400000, guid: 4ef40169b1384af4d88157fee260c6a8, type: 2}
+--- !u!4 &1419752787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419752785}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.029827, y: -0.11915447, z: 48.50879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1448949684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,7 +2329,6 @@ MonoBehaviour:
   txtSpeedSlider: {fileID: 2090946095}
   index: 0
   txtSpeed: 0
-  key: 0
 --- !u!1 &2090946093
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,3 +2442,5 @@ SceneRoots:
   - {fileID: 1990400930}
   - {fileID: 1283965534}
   - {fileID: 578962599}
+  - {fileID: 1419752787}
+  - {fileID: 606505728}

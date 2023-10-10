@@ -8,9 +8,9 @@ public class DialogButton : MonoBehaviour
     public string npcName;
     public int questId = 0;
 
-    [SerializeField]private Button myButton;
+    [SerializeField] private Button myButton;
 
-    private Dictionary<int, string> _sentnece = new Dictionary<int, string>();
+    private List<string> _sentnece = new List<string>();
 
     void Start()
     {
@@ -20,11 +20,10 @@ public class DialogButton : MonoBehaviour
 
     void Process()
     {
-        _sentnece =  new Dictionary<int, string>(DataManager.instance.DataProcess(npcName, questId));
+        _sentnece = new List<string>(StageManager.instance.GetDialog());
         if (_sentnece != null)
         {
-            print(_sentnece.Count);
-            TypingTest.instance.StartDialog(questId, _sentnece.Count, _sentnece);
+            TypingTest.instance.StartDialog(_sentnece.Count, _sentnece);
         }
         else
             Debug.Log("저장되어 있지 않은 NPC Name 입니다.");

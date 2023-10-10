@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCDialog : MonoBehaviour
-{
-    public string npcName;
-    public int questId = 0;
-    private Dictionary<int, string> _sentnece = new Dictionary<int, string>();
+{ 
+    private List<string> _sentnece = new List<string>();
 
     private void OnMouseDown()
     {
@@ -14,11 +12,10 @@ public class NPCDialog : MonoBehaviour
     }
     void Process()
     {
-        _sentnece = new Dictionary<int, string>(DataManager.instance.DataProcess(npcName, questId));
+        _sentnece = new List<string>(StageManager.instance.GetDialog());
         if (_sentnece != null)
         {
-            print(_sentnece.Count);
-            TypingTest.instance.StartDialog(questId, _sentnece.Count, _sentnece);
+            TypingTest.instance.StartDialog(_sentnece.Count, _sentnece);
         }
         else
             Debug.Log("저장되어 있지 않은 NPC Name 입니다.");

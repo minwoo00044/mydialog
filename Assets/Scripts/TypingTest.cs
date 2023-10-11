@@ -45,6 +45,7 @@ public class TypingTest : MonoBehaviour
     }
     IEnumerator DialogRead(string data)
     {
+        print(data);
         string[] colorAndSentence = data.Split('&');
         text.color = ColorManager.instance.GetTextColor(colorAndSentence[0]);
         _currentTween = text.DOText(colorAndSentence[1], txtSpeed);
@@ -58,6 +59,7 @@ public class TypingTest : MonoBehaviour
         if (index >= _datasCount)
         {
             index = 0;
+
             return;
         }
         if (_currentCoroutine != null)
@@ -80,17 +82,16 @@ public class TypingTest : MonoBehaviour
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
 
-            float remainingRatio = (float)(_currentDialog[index].Length - currentText.Length) / _currentDialog[index].Length;
+            float remainingRatio = (float)(_currentDialog[index].Split('&')[1].Length - currentText.Length) / _currentDialog[index].Split('&')[1].Length;
             // 남아 있는 문자열 비율 계산
 
-            _currentTween = text.DOText(_currentDialog[index].Substring(currentText.Length), txtSpeed * remainingRatio)
+            _currentTween = text.DOText(_currentDialog[index].Split('&')[1].Substring(currentText.Length), txtSpeed * remainingRatio)
                 .SetRelative()
                 .SetDelay(0.1f)
                 .OnComplete(() =>
                 {
                     StartCoroutine(NextAfterWating());
                 });
-
         }
     }
 
@@ -107,7 +108,6 @@ public class TypingTest : MonoBehaviour
             return;
         }
         index++;
-
         KillTweenAndStopCoroutine();
 
         text.text = "";
@@ -122,8 +122,6 @@ public class TypingTest : MonoBehaviour
         KillTweenAndStopCoroutine();
         text.text = string.Empty;
         index--;
-  
-
         _currentCoroutine = DialogRead(_currentDialog[index]);
         StartCoroutine(_currentCoroutine);
     }

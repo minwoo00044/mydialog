@@ -5,24 +5,24 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
-    public int stageIndex;
+    public int stageIndex = -1;
+    public Stage currentStage;
 
     [SerializeField] List<Stage> stages;
-    [SerializeField] Stage currentStage;
 
     private void Awake()
     {
         instance = this;
-        foreach (var stage in stages) 
+        foreach (var stage in stages)
         {
             stage.LoadDialogs();
         }
     }
     public List<string> GetDialog() => currentStage.GetDialogInStage();
 
-    public void SetStage(int _index)
+    public void NextStage()
     {
-        stageIndex = _index;
+        stageIndex++;
         currentStage = stages[stageIndex];
     }
 }

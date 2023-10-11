@@ -45,7 +45,6 @@ public class ColorManager : MonoBehaviour
             if (lineData.Length < 2) continue; // 데이터가 없는 줄을 건너뜁니다.
 
             string name = lineData[0];
-            print(name);
             try
             {
                 string[] rgbString = lineData[1].Split(' ');

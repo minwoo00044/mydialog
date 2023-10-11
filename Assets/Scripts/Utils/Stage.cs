@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Branch
@@ -19,12 +20,13 @@ public class Branch
 [CreateAssetMenu(fileName = "New Stage", menuName = "Stage")]
 public class Stage : ScriptableObject
 {
-    [SerializeField] int branchCount;
+    [SerializeField] int branchIndex;
     [SerializeField] string[] branchNames;
     [SerializeField] int stageNum;
     [SerializeField] Dictionary<string, Branch> branches = new Dictionary<string, Branch>();
+    public Sprite image;
 
-    public List<string> GetDialogInStage() => branches[branchNames[branchCount]].dialogs;
+    public List<string> GetDialogInStage() => branches[branchNames[branchIndex]].dialogs;
     public void LoadDialogs()
     {
         TextAsset data = Resources.Load("Stage" + stageNum.ToString()) as TextAsset;

@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] protected string npcName;
+    [SerializeField]private NPCData _data;
 
+    public NPCData data
+    { 
+        get { return _data; }
+        set { _data = value; }
+    }
 
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void InitNpc()
+    {
+        spriteRenderer.sprite = _data.NPCImg;
+    }
 }

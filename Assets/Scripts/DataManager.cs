@@ -53,7 +53,7 @@ public class ColorManager : MonoBehaviour
             }
             catch (FormatException)
             {
-                Debug.Log("Invalid color value at line " + (i + 1));
+                Debug.Log("컬러값이 적혀있지 않습니다. " + (i + 1));
                 continue;
             }
         }

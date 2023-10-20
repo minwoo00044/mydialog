@@ -41,16 +41,17 @@ public class Stage : ScriptableObject
         {
             var parts = lines[i].Split(',');
 
-            if (parts.Length < 3) continue; // 라인의 부분이 충분하지 않으면 건너뜀
+            if (parts.Length < 4) continue; // 라인의 부분이 충분하지 않으면 건너뜀
 
             var branchKeyPart = parts[0];
             var charaKeyPart = parts[1];
-            var sentenceKeyPart = parts[2];
+            var imotionKeyPart = parts[2];
+            var sentenceKeyPart = parts[3];
 
             if (branches.TryGetValue(branchKeyPart, out Branch currentBranch))
             {
                 currentBranch = branches[branchKeyPart];
-                string dialogEntry = charaKeyPart + '&' + sentenceKeyPart;
+                string dialogEntry = charaKeyPart + '&' + sentenceKeyPart + '&' + imotionKeyPart;
                 currentBranch.dialogs.Add(dialogEntry);
             }
             else

@@ -15,7 +15,7 @@ public class TypingTest : MonoBehaviour
     [SerializeField] private float txtSpeed;
     private WaitForSeconds waitForSeconds;
     private Tweener _currentTween;
-    const float ORIGIN_SPEED = 6f;
+    const float ORIGIN_SPEED = 4f;
 
     IEnumerator _currentCoroutine;
 
@@ -40,6 +40,7 @@ public class TypingTest : MonoBehaviour
         index = 0;
         _datasCount = sentenceCount;
 
+        print(_currentDialog[index]);
         _currentCoroutine = DialogRead(_currentDialog[index]);
         StartCoroutine(_currentCoroutine);
     }
@@ -48,6 +49,7 @@ public class TypingTest : MonoBehaviour
         print(data);
         string[] colorAndSentence = data.Split('&');
         text.color = ColorManager.instance.GetTextColor(colorAndSentence[0]);
+        NPCManager.instance.ChangeNpcState(colorAndSentence[0], colorAndSentence[2]);
         _currentTween = text.DOText(colorAndSentence[1], txtSpeed);
         yield return waitForSeconds;
         NextDialog();

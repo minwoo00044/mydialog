@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject startCanvas;
     private List<string> _sentnece = new List<string>();
 
-    string[] temp = new string[1];
+    string[] temp = new string[2];
     private void Awake()
     {
         instance = this;
-        temp[0] = "JongHo";
+        temp[0] = "Boy";
+        temp[1] = "Girl";
         //interactiveCanvas.SetActive(false);
     }
     public void StartGame()

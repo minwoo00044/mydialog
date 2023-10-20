@@ -12,14 +12,19 @@ public class NPC : MonoBehaviour
         set { _data = value; }
     }
 
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer
+    {
+        get => _spriteRenderer;
+    }
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    public void InitNpc()
+    public void InitNpc(string _name)
     {
-        spriteRenderer.sprite = _data.NPCImg;
+        _spriteRenderer.sprite = _data.nomral_imo;
+        gameObject.name = _name;
     }
 }

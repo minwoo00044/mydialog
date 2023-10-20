@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0659e0d2613a8498e874411b81c381, type: 3}
+  m_Name: Girl
+  m_EditorClassIdentifier: 
+  NPCName: Girl
+  nomral_imo: {fileID: 672144755, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  smile: {fileID: 27256775, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  angry: {fileID: -2136280318, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  sad: {fileID: -1685704414, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  customImotion: []

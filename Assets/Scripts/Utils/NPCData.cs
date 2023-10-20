@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NPCData : ScriptableObject
 {
     public string NPCName;
+    public Color txtColor;
     [Header("==========Ç¥Á¤==========")]
     public Sprite nomral_imo;
     public Sprite smile;

@@ -9,7 +9,7 @@ public class NPCManager : MonoBehaviour
     public static NPCManager instance;
     [SerializeField] GameObject NPCs;
     private Dictionary<string, NPCData> npcDatas = new Dictionary<string, NPCData>();
-    private List<NPC> _currentNPCList = new List<NPC>();
+    private Dictionary<string, NPC> _currentNPCList = new Dictionary<string, NPC>();
     private List<NPC> _NPCList = new List<NPC>();
 
     private void Awake()
@@ -26,7 +26,7 @@ public class NPCManager : MonoBehaviour
             if (npcDatas.ContainsKey(_names[i]))
             {
                 _NPCList[i].data = npcDatas[_names[i]];
-                _currentNPCList.Add(_NPCList[i]);
+                _currentNPCList.Add(_names[i], _NPCList[i]);
                 _NPCList[i].InitNpc(_names[i]);
             }
         }
@@ -36,20 +36,24 @@ public class NPCManager : MonoBehaviour
     {
         foreach(var chara in _currentNPCList)
         {
-            if(chara.gameObject.name != _name)
+            if(chara.Value.gameObject.name != _name)
             {
-                Color newColor = chara.gameObject.GetComponent<SpriteRenderer>().color;
+                Color newColor = chara.Value.gameObject.GetComponent<SpriteRenderer>().color;
                 newColor.a = 0.5f; // 0.5는 원하는 알파 값으로 변경 가능
-                chara.gameObject.GetComponent<SpriteRenderer>().color = newColor;
+                chara.Value.gameObject.GetComponent<SpriteRenderer>().color = newColor;
             }
-            else if(chara.gameObject.name == _name)
+            else if(chara.Value.gameObject.name == _name)
             {
-                Color newColor = chara.gameObject.GetComponent<SpriteRenderer>().color;
+                Color newColor = chara.Value.gameObject.GetComponent<SpriteRenderer>().color;
                 newColor.a = 1f; // 0.5는 원하는 알파 값으로 변경 가능
-                chara.gameObject.GetComponent<SpriteRenderer>().color = newColor;
-                chara.gameObject.GetComponent<SpriteRenderer>().sprite = GetNPCImotion(_imotion, chara.data);
+                chara.Value.gameObject.GetComponent<SpriteRenderer>().color = newColor;
+                chara.Value.gameObject.GetComponent<SpriteRenderer>().sprite = GetNPCImotion(_imotion, chara.Value.data);
             }
         }
+    }
+    public Color GetTextColor(string _name)
+    {
+        return _currentNPCList[_name].GetTextColorInNPC();
     }
     private Sprite GetNPCImotion(string _imotion, NPCData charaData)
     {
@@ -86,24 +90,23 @@ public class NPCManager : MonoBehaviour
     private void AssignNpcPlace()
     {
         int npcCount = _currentNPCList.Count; // NPC의 수
-
-        for (int i = 0; i < npcCount; i++)
+        int count = 0;
+        foreach(var NPC in _currentNPCList)
         {
             // 위치 계산: 홀수 개수의 경우 중앙에 한 개, 짝수 개수의 경우 중앙 양옆에 배치
-            float positionX = (i - npcCount / 2) * distance;
+            float positionX = (count - npcCount / 2) * distance;
             if (npcCount % 2 == 0)
                 positionX += distance / 2;
-
             Vector3 newPosition = new Vector3(positionX, Camera.main.transform.position.y, Camera.main.transform.position.z + distance);
-
-            _currentNPCList[i].transform.position = newPosition;
+            NPC.Value.transform.position = newPosition;
+            count++;
         }
     }
     private void ResetCurrentNPCList()
     {
         foreach(var npc in _currentNPCList)
         {
-            npc.data = null;
+            npc.Value.data = null;
         }
         _currentNPCList.Clear();
     }

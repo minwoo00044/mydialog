@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Boy
   m_EditorClassIdentifier: 
   NPCName: Boy
+  txtColor: {r: 0.13578582, g: 1, b: 0, a: 1}
   nomral_imo: {fileID: 1236208317, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
   smile: {fileID: -211157871, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
   angry: {fileID: 91461752, guid: f1ef99072c78a16429e8709270829c9a, type: 3}

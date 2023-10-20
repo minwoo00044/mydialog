@@ -48,7 +48,7 @@ public class TypingTest : MonoBehaviour
     {
         print(data);
         string[] colorAndSentence = data.Split('&');
-        text.color = ColorManager.instance.GetTextColor(colorAndSentence[0]);
+        text.color = NPCManager.instance.GetTextColor(colorAndSentence[0]);
         NPCManager.instance.ChangeNpcState(colorAndSentence[0], colorAndSentence[2]);
         _currentTween = text.DOText(colorAndSentence[1], txtSpeed);
         yield return waitForSeconds;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Girl
   m_EditorClassIdentifier: 
   NPCName: Girl
+  txtColor: {r: 1, g: 0, b: 0.77448034, a: 1}
   nomral_imo: {fileID: 672144755, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
   smile: {fileID: 27256775, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
   angry: {fileID: -2136280318, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}

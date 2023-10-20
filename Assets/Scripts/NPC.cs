@@ -5,13 +5,15 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     [SerializeField]private NPCData _data;
-
     public NPCData data
     { 
         get { return _data; }
         set { _data = value; }
     }
-
+    public Color GetTextColorInNPC()
+    {
+        return _data.txtColor;
+    }
     private SpriteRenderer _spriteRenderer;
     public SpriteRenderer spriteRenderer
     {
@@ -26,5 +28,6 @@ public class NPC : MonoBehaviour
     {
         _spriteRenderer.sprite = _data.nomral_imo;
         gameObject.name = _name;
+
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +11,27 @@ public class NPCData : ScriptableObject
     public string NPCName;
     public Color txtColor;
     [Header("==========표정==========")]
-    public Sprite nomral_imo;
-    public Sprite smile;
-    public Sprite angry;
-    public Sprite sad;
-    [Tooltip("아직 구현 못한 기능")]
-    public List<Sprite>customImotion = new List<Sprite>();
+    [SerializeField] List<string> NPCImotionNames = new List<string>();
+    [SerializeField] List<Sprite> imotionSprites = new List<Sprite>();
+    public Dictionary<string, Sprite> imotions = new Dictionary<string, Sprite>();
+    private string defalutImotionName = "default";
+
+
+    public int test;
+    private void OnEnable()
+    {
+        imotions.Clear();
+        for (int i = 0; i < NPCImotionNames.Count; i++)
+        {
+            try
+            {
+                imotions.Add(NPCImotionNames[i], imotionSprites[i]);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                imotions.Add(NPCImotionNames[i], imotionSprites[0]);
+            }
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,20 +19,7 @@ public class NPCManager : MonoBehaviour
         LoadNPCData();
         InitNPCList();
     }
-    public void ChangeNPC(string[] _names)
-    {
-        ResetCurrentNPCList();
-        for (int i = 0; i < _names.Length; i++)
-        {
-            if (npcDatas.ContainsKey(_names[i]))
-            {
-                _NPCList[i].data = npcDatas[_names[i]];
-                _currentNPCList.Add(_names[i], _NPCList[i]);
-                _NPCList[i].InitNpc(_names[i]);
-            }
-        }
-        AssignNpcPlace();
-    }
+
     public void ChangeNpcState(string _name, string _imotion)
     {
         foreach(var chara in _currentNPCList)
@@ -51,26 +39,28 @@ public class NPCManager : MonoBehaviour
             }
         }
     }
+    public void ChangeNPC(string[] _names)
+    {
+        ResetCurrentNPCList();
+        for (int i = 0; i < _names.Length; i++)
+        {
+            if (npcDatas.ContainsKey(_names[i]))
+            {
+                _NPCList[i].data = npcDatas[_names[i]];
+                _currentNPCList.Add(_names[i], _NPCList[i]);
+                _NPCList[i].InitNpc(_names[i]);
+            }
+        }
+        AssignNpcPlace();
+    }
+
     public Color GetTextColor(string _name)
     {
         return _currentNPCList[_name].GetTextColorInNPC();
     }
     private Sprite GetNPCImotion(string _imotion, NPCData charaData)
     {
-        switch(_imotion)
-        {
-            case "normal":
-                return charaData.nomral_imo;
-            case "smile":
-                return charaData.smile;
-            case "angry":
-                return charaData.angry;
-            case "sad":
-                return charaData.sad;
-            default:
-                print("아직 커스텀표정은 지원되지 않습니다");
-                return charaData.nomral_imo;
-        }
+        return charaData.imotions.ContainsKey(_imotion) ? charaData.imotions[_imotion] : charaData.imotions.First().Value;
     }
     private void InitNPCList()
     {

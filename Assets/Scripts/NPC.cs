@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
@@ -26,8 +27,8 @@ public class NPC : MonoBehaviour
     }
     public void InitNpc(string _name)
     {
-        _spriteRenderer.sprite = _data.nomral_imo;
+        _spriteRenderer.sprite = _data.imotions.First().Value;
         gameObject.name = _name;
 
-    }
+    }   
 }

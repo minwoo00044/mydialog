@@ -2592,7 +2592,12 @@ MonoBehaviour:
   text: {fileID: 1319646637}
   txtSpeedSlider: {fileID: 2090946095}
   index: 0
-  txtSpeed: 0
+  _datasCount: 0
+  txtReadingTime: 4
+  txtSpeed: 1
+  txtSpeedAccel: 3
+  maxReadingTime: 6
+  minReadingTime: 2
 --- !u!4 &2044152239 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2895535436748975039, guid: 9e1a1493dcb45c246abc31471bc9a022, type: 3}
@@ -2681,10 +2686,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 792817982}
   m_HandleRect: {fileID: 1419460639}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 1
   m_MaxValue: 3
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

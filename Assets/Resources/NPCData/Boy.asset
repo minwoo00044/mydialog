@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0659e0d2613a8498e874411b81c381, type: 3}
   m_Name: Boy
   m_EditorClassIdentifier: 
-  NPCName: Girl
-  txtColor: {r: 1, g: 0, b: 0.77448034, a: 1}
-  nomral_imo: {fileID: 672144755, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
-  smile: {fileID: 27256775, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
-  angry: {fileID: -2136280318, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
-  sad: {fileID: -1685704414, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
-  customImotion: []
+  NPCName: Boy
+  txtColor: {r: 0.15860271, g: 1, b: 0, a: 1}
+  NPCImotionNames:
+  - normal
+  - angry
+  - sad
+  - smile
+  imotionSprites:
+  - {fileID: 1236208317, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
+  - {fileID: 91461752, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
+  - {fileID: 222324196, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
+  - {fileID: -211157871, guid: f1ef99072c78a16429e8709270829c9a, type: 3}
+  test: 3

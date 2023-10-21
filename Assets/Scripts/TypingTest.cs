@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
+
 public class TypingTest : MonoBehaviour
 {
     public static TypingTest instance;
@@ -11,13 +13,17 @@ public class TypingTest : MonoBehaviour
     public Slider txtSpeedSlider;
 
     [SerializeField] int index;
-    private int _datasCount;
-    [SerializeField] private float txtSpeed;
+    [SerializeField]private int _datasCount;
+    [SerializeField] private float txtReadingTime;
+    [SerializeField] private float txtSpeed = 1f;
+    [SerializeField] private float txtSpeedAccel = 3f;
+    [SerializeField] private float maxReadingTime;
+    [SerializeField] private float minReadingTime;
     private WaitForSeconds waitForSeconds;
     private Tweener _currentTween;
-    const float ORIGIN_SPEED = 4f;
 
     IEnumerator _currentCoroutine;
+
 
     private List<string> _currentDialog = new List<string>();
     private void Awake()
@@ -27,8 +33,7 @@ public class TypingTest : MonoBehaviour
     private void Start()
     {
         DOTween.Init();
-        txtSpeed = ORIGIN_SPEED;
-        waitForSeconds = new WaitForSeconds(txtSpeed + 0.5f);
+        waitForSeconds = new WaitForSeconds(txtReadingTime + 0.5f);
     }
     public void StartDialog(int sentenceCount, List<string> datas_origin)
     {
@@ -50,20 +55,31 @@ public class TypingTest : MonoBehaviour
         string[] colorAndSentence = data.Split('&');
         text.color = NPCManager.instance.GetTextColor(colorAndSentence[0]);
         NPCManager.instance.ChangeNpcState(colorAndSentence[0], colorAndSentence[2]);
-        _currentTween = text.DOText(colorAndSentence[1], txtSpeed);
+
+
+        _currentTween = text.DOText(colorAndSentence[1], SetTxtReadingTime(colorAndSentence[1]));
         yield return waitForSeconds;
         NextDialog();
     }
+
+    private float SetTxtReadingTime(string Sentence)
+    {
+        txtReadingTime = Sentence.Length / (txtSpeed * txtSpeedAccel);
+        txtReadingTime = Mathf.Clamp(txtReadingTime, minReadingTime, maxReadingTime);
+        waitForSeconds = new WaitForSeconds(txtReadingTime + 0.5f);
+
+        return txtReadingTime;
+    }
+
     private void NextDialog()
     {
-        index++;
-        text.text = string.Empty;
-        if (index >= _datasCount)
-        {
-            index = 0;
 
+        text.text = string.Empty;
+        if (index >= _datasCount -1 )
+        {
             return;
         }
+        index++;
         if (_currentCoroutine != null)
         {
             StopCoroutine(_currentCoroutine);
@@ -74,9 +90,7 @@ public class TypingTest : MonoBehaviour
 
     public void ChangeSpeed()
     {
-        txtSpeed = ORIGIN_SPEED - txtSpeedSlider.value;
-        waitForSeconds = null;
-        waitForSeconds = new WaitForSeconds(txtSpeed + 0.5f);
+        txtSpeed = txtSpeedSlider.value;
         if (_currentTween != null && _currentTween.IsActive() && !_currentTween.IsComplete())
         {
             string currentText = text.text; // 현재 텍스트 스냅샷
@@ -87,7 +101,7 @@ public class TypingTest : MonoBehaviour
             float remainingRatio = (float)(_currentDialog[index].Split('&')[1].Length - currentText.Length) / _currentDialog[index].Split('&')[1].Length;
             // 남아 있는 문자열 비율 계산
 
-            _currentTween = text.DOText(_currentDialog[index].Split('&')[1].Substring(currentText.Length), txtSpeed * remainingRatio)
+            _currentTween = text.DOText(_currentDialog[index].Split('&')[1].Substring(currentText.Length), SetTxtReadingTime(_currentDialog[index].Split('&')[1].Substring(currentText.Length)) * remainingRatio)
                 .SetRelative()
                 .SetDelay(0.1f)
                 .OnComplete(() =>

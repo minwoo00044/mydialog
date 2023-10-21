@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0659e0d2613a8498e874411b81c381, type: 3}
   m_Name: Girl
   m_EditorClassIdentifier: 
-  NPCName: Boy
-  txtColor: {r: 0.13578582, g: 1, b: 0, a: 1}
+  NPCName: Girl
+  txtColor: {r: 1, g: 0, b: 0.8753972, a: 1}
   NPCImotionNames:
   - normal
   - sad
   - doya
   - angry
-  - surprise
+  - smile
   imotionSprites:
   - {fileID: 672144755, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
   - {fileID: -1685704414, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
   - {fileID: 96244683, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
   - {fileID: -2136280318, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
-  - {fileID: 575981029, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  - {fileID: 27256775, guid: 6a44f655cfc176848a81cbd530233de5, type: 3}
+  test: 5

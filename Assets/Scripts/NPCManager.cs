@@ -39,17 +39,15 @@ public class NPCManager : MonoBehaviour
             }
         }
     }
-    public void ChangeNPC(string[] _names)
+    public void ChangeNPC(List<NPCData> _currentNpcs)
     {
         ResetCurrentNPCList();
-        for (int i = 0; i < _names.Length; i++)
+
+        for (int i = 0; i < _currentNpcs.Count; i++)
         {
-            if (npcDatas.ContainsKey(_names[i]))
-            {
-                _NPCList[i].data = npcDatas[_names[i]];
-                _currentNPCList.Add(_names[i], _NPCList[i]);
-                _NPCList[i].InitNpc(_names[i]);
-            }
+            _NPCList[i].data = _currentNpcs[i];
+            _currentNPCList.Add(_currentNpcs[i].NPCName, _NPCList[i]);
+            _NPCList[i].InitNpc(_currentNpcs[i].NPCName);
         }
         AssignNpcPlace();
     }
@@ -57,6 +55,10 @@ public class NPCManager : MonoBehaviour
     public Color GetTextColor(string _name)
     {
         return _currentNPCList[_name].GetTextColorInNPC();
+    }
+    public NPCData GetNpcData(string _name)
+    {
+        return npcDatas.ContainsKey(_name) ? npcDatas[_name] : npcDatas["Error"];
     }
     private Sprite GetNPCImotion(string _imotion, NPCData charaData)
     {
@@ -96,6 +98,7 @@ public class NPCManager : MonoBehaviour
     {
         foreach(var npc in _currentNPCList)
         {
+            npc.Value.ResetNpc();
             npc.Value.data = null;
         }
         _currentNPCList.Clear();

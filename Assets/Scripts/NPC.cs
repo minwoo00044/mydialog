@@ -29,6 +29,10 @@ public class NPC : MonoBehaviour
     {
         _spriteRenderer.sprite = _data.imotions.First().Value;
         gameObject.name = _name;
-
     }   
+    public void ResetNpc()
+    {
+        _spriteRenderer.sprite = null;
+        gameObject.name = "NPC";
+    }
 }

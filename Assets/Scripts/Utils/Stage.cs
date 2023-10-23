@@ -10,23 +10,26 @@ public class Branch
 {
     public string branchName;
     public List<string> dialogs = new List<string>();
-    
     public Branch(string _name="default")
     {
         branchName = _name;
     }
+    public List<NPCData> actorNpcList = new List<NPCData>(); 
 }
-
 [CreateAssetMenu(fileName = "New Stage", menuName = "Stage")]
 public class Stage : ScriptableObject
 {
     [SerializeField] int branchIndex;
     [SerializeField] string[] branchNames;
     [SerializeField] int stageNum;
-    [SerializeField] Dictionary<string, Branch> branches = new Dictionary<string, Branch>();
+    Dictionary<string, Branch> branches = new Dictionary<string, Branch>();
     public Sprite image;
 
-    public List<string> GetDialogInStage() => branches[branchNames[branchIndex]].dialogs;
+    public List<string> GetDialogInStage(Branch _branch) => _branch.dialogs;
+    public Branch GetCurrentBranch(string _branchName)
+    {
+        return branches.ContainsKey(_branchName) ? branches[_branchName] : branches["default"];
+    }
     public void LoadDialogs()
     {
         TextAsset data = Resources.Load("Stage" + stageNum.ToString()) as TextAsset;
@@ -53,11 +56,16 @@ public class Stage : ScriptableObject
                 currentBranch = branches[branchKeyPart];
                 string dialogEntry = charaKeyPart + '&' + sentenceKeyPart + '&' + imotionKeyPart;
                 currentBranch.dialogs.Add(dialogEntry);
+                currentBranch.actorNpcList.Add(NPCManager.instance.GetNpcData(charaKeyPart));
             }
             else
             {
                 Debug.LogWarning("Branch " + branchKeyPart + " not found.");
             }
+        }
+        foreach(Branch branch in branches.Values)
+        {
+            branch.actorNpcList = branch.actorNpcList.Distinct().ToList();
         }
     }
 

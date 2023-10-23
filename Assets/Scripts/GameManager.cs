@@ -13,12 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject startCanvas;
     private List<string> _sentnece = new List<string>();
 
-    string[] temp = new string[2];
     private void Awake()
     {
         instance = this;
-        temp[0] = "Boy";
-        temp[1] = "Girl";
         //interactiveCanvas.SetActive(false);
     }
     public void StartGame()
@@ -42,7 +39,7 @@ public class GameManager : MonoBehaviour
     void Process()
     {
         _sentnece = new List<string>(StageManager.instance.GetDialog());
-        NPCManager.instance.ChangeNPC(temp);
+
         if (_sentnece != null)
         {
             TypingTest.instance.StartDialog(_sentnece.Count, _sentnece);

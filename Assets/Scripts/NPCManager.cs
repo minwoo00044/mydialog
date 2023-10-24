@@ -9,7 +9,8 @@ public class NPCManager : MonoBehaviour
     [SerializeField] float distance;
     public static NPCManager instance;
     [SerializeField] GameObject NPCs;
-    private Dictionary<string, NPCData> npcDatas = new Dictionary<string, NPCData>();
+    private Dictionary<string, NPCData> _npcDatas = new Dictionary<string, NPCData>();
+    public Dictionary<string, NPCData> npcDatas => _npcDatas;
     private Dictionary<string, NPC> _currentNPCList = new Dictionary<string, NPC>();
     private List<NPC> _NPCList = new List<NPC>();
 
@@ -19,7 +20,6 @@ public class NPCManager : MonoBehaviour
         LoadNPCData();
         InitNPCList();
     }
-
     public void ChangeNpcState(string _name, string _imotion)
     {
         foreach(var chara in _currentNPCList)
@@ -58,7 +58,7 @@ public class NPCManager : MonoBehaviour
     }
     public NPCData GetNpcData(string _name)
     {
-        return npcDatas.ContainsKey(_name) ? npcDatas[_name] : npcDatas["Error"];
+        return _npcDatas.ContainsKey(_name) ? _npcDatas[_name] : _npcDatas["Error"];
     }
     private Sprite GetNPCImotion(string _imotion, NPCData charaData)
     {
@@ -76,7 +76,7 @@ public class NPCManager : MonoBehaviour
         NPCData[] resources = Resources.LoadAll<NPCData>("NPCData");
         foreach (NPCData resource in resources)
         {
-            npcDatas.Add(resource.NPCName, resource);
+            _npcDatas.Add(resource.NPCName, resource);
         }
     }
     private void AssignNpcPlace()

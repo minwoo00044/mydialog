@@ -73,10 +73,11 @@ public class TypingTest : MonoBehaviour
 
     private void NextDialog()
     {
-
         text.text = string.Empty;
         if (index >= _datasCount -1 )
         {
+            if(!StageManager.instance.currentStage.isNonSelectStage)
+                SelectManager.instance.ToggleSelectBtn();
             return;
         }
         index++;

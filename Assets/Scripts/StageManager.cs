@@ -27,6 +27,7 @@ public class StageManager : MonoBehaviour
         currentStage = stages[stageIndex];
         SetBranch(_branchName);
         NPCManager.instance.ChangeNPC(_currentBranchInCurrentStage.actorNpcList);
+        GameManager.instance.DialogProcess();
     }
     public List<string> GetDialog() => currentStage.GetDialogInStage(_currentBranchInCurrentStage);
     private void SetBranch(string _branchName)

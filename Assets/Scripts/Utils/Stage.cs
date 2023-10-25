@@ -24,6 +24,7 @@ public class Stage : ScriptableObject
     [SerializeField] int stageNum;
     Dictionary<string, Branch> branches = new Dictionary<string, Branch>();
     public Sprite image;
+    public bool isNonSelectStage = false;
 
     public List<string> GetDialogInStage(Branch _branch) => _branch.dialogs;
     public Branch GetBranchOnName(string _branchName)
@@ -36,6 +37,7 @@ public class Stage : ScriptableObject
         string[] lines = data.text.Split('\n');
 
         branches.Clear();
+        branches.Add("default", new Branch("default"));
         for (int i = 0; i < branchNames.Length; i++)
         {
             branches.Add(branchNames[i], new Branch(branchNames[i]));
@@ -58,10 +60,10 @@ public class Stage : ScriptableObject
                 currentBranch.dialogs.Add(dialogEntry);
                 currentBranch.actorNpcList.Add(NPCManager.instance.GetNpcData(charaKeyPart));
             }
-            else
-            {
-                Debug.LogWarning("Branch " + branchKeyPart + " not found.");
-            }
+            //else
+            //{
+            //    Debug.LogWarning("Branch " + branchKeyPart + " not found.");
+            //}
         }
         foreach(Branch branch in branches.Values)
         {

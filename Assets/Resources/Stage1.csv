@@ -1,9 +1,9 @@
 ﻿branch,chara,imotion,sentence
 default,Boy,normal,나는야 상남자 오늘 고백을 할테야'
 ,,,
-default,Boy,smile,반가워 민지야. 오늘 너에게 할 말이 있어
+민지분노,Girl,angry,진짜 역겨운 놈이야
 ,,,
-default,Boy,normal,나랑 사귀자 민지야
+민지분노,Girl,doya,내가 잘난건가?
 ,,,
-default,Boy,angry,왜 화내 씨발!
-default,Boy,sad,흑흑 ㅜㅜㅜ 고백에 실패해 버렸어 ㅜㅜ
+민수비참,Boy,angry,개같은련!
+민수비참,Boy,sad,도망갈테야 ㅜㅜ

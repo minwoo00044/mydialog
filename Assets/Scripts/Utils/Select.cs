@@ -19,13 +19,18 @@ public class Choice
 
     public void Execute()
     {
-        Debug.Log(choiceTxt);
         for (int i = 0; i < affectedCharacters.Count; i++)
         {
- 
             CharacterStateChange currnet = affectedCharacters[i];
             StateManager.instance.SetNpcState(currnet.targetChara.NPCName, currnet.changeState, currnet.changeStateAmount);
+
         }
+        if (!string.IsNullOrEmpty(nextBranchName))
+        {
+            StageManager.instance.NextStage(nextBranchName);
+
+        }
+        SelectManager.instance.ToggleSelectBtn();
     }
 }
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75ca4db2195d7a47aa2f66b3a454c40, type: 3}
   m_Name: New Stage
   m_EditorClassIdentifier: 
-  branchCount: 0
-  branchNames:
-  - default
+  branchIndex: 0
+  branchNames: []
   stageNum: 0
   image: {fileID: 21300000, guid: 5f489bf7cb7d73942a1246d80221ad86, type: 3}
+  isNonSelectStage: 0

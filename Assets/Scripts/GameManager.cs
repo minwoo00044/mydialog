@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         StageMove();
     }
 
-    private void StageMove()
+    public void StageMove()
     {
         StageManager.instance.NextStage();
         ChangeBackGround(StageManager.instance.currentStage.image);
@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     {
         backGround.sprite = nextImg;
     }
-    void Process()
+    
+    public void DialogProcess()
     {
         _sentnece = new List<string>(StageManager.instance.GetDialog());
 

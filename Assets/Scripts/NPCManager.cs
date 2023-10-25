@@ -16,7 +16,8 @@ public class NPCManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
         LoadNPCData();
         InitNPCList();
     }

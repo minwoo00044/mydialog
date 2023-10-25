@@ -26,7 +26,7 @@ public class Stage : ScriptableObject
     public Sprite image;
 
     public List<string> GetDialogInStage(Branch _branch) => _branch.dialogs;
-    public Branch GetCurrentBranch(string _branchName)
+    public Branch GetBranchOnName(string _branchName)
     {
         return branches.ContainsKey(_branchName) ? branches[_branchName] : branches["default"];
     }

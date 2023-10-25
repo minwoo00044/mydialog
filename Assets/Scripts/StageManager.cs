@@ -8,7 +8,8 @@ public class StageManager : MonoBehaviour
     public static StageManager instance;
     public int stageIndex = -1;
     public Stage currentStage;
-    private Branch currentBranchInCurrentStage;
+    private Branch _currentBranchInCurrentStage;
+    public Branch currentBranch => _currentBranchInCurrentStage;
 
     [SerializeField] List<Stage> stages;
 
@@ -25,11 +26,11 @@ public class StageManager : MonoBehaviour
         stageIndex++;
         currentStage = stages[stageIndex];
         SetBranch(_branchName);
-        NPCManager.instance.ChangeNPC(currentBranchInCurrentStage.actorNpcList);
+        NPCManager.instance.ChangeNPC(_currentBranchInCurrentStage.actorNpcList);
     }
-    public List<string> GetDialog() => currentStage.GetDialogInStage(currentBranchInCurrentStage);
+    public List<string> GetDialog() => currentStage.GetDialogInStage(_currentBranchInCurrentStage);
     private void SetBranch(string _branchName)
     {
-        currentBranchInCurrentStage = currentStage.GetCurrentBranch(_branchName);
+        _currentBranchInCurrentStage = currentStage.GetBranchOnName(_branchName);
     }
 }

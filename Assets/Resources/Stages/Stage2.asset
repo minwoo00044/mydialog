@@ -20,8 +20,8 @@ MonoBehaviour:
   - _targetBranchName: test
     checkingDatas:
     - checkingNpc: {fileID: 11400000, guid: 3a4fea9e45e5cae469688e60948448b9, type: 2}
-      targetStates: 0100000000000000
-      amounts: 0000000000000000
+      targetStates: 010000000000000002000000
+      amounts: 000000000000000000000000
     - checkingNpc: {fileID: 11400000, guid: 3a4fea9e45e5cae469688e60948448b9, type: 2}
       targetStates: 0100000000000000
       amounts: 0000000000000000

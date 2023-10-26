@@ -14,6 +14,9 @@ public class StateManager : MonoBehaviour
 {
     public static StateManager instance;
     private Dictionary<string, Dictionary<NpcState, int>> _statesAtNpc = new Dictionary<string, Dictionary<NpcState, int>>();
+
+    public Dictionary<string, Dictionary<NpcState, int>> StatesAtNpc { get => _statesAtNpc; set => _statesAtNpc = value; }
+
     private void Awake()
     {
         if(instance == null)
@@ -23,7 +26,7 @@ public class StateManager : MonoBehaviour
 
     public void SetNpcState(string targetName, List<NpcState> targetState, List<int> changeAmount)
     {
-        Dictionary<NpcState, int> current = _statesAtNpc[targetName];
+        Dictionary<NpcState, int> current = StatesAtNpc[targetName];
         for(int i = 0; i < targetState.Count; i++)
         {
             if (current.ContainsKey(targetState[i]))
@@ -45,7 +48,7 @@ public class StateManager : MonoBehaviour
                 newDic.Add((NpcState)idx, 0);
                 idx++;
             }
-            _statesAtNpc.Add(npcData.Value.NPCName, newDic);
+            StatesAtNpc.Add(npcData.Value.NPCName, newDic);
         }
         //foreach(var item in statesAtNpc)
         //{

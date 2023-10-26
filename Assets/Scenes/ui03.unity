@@ -2411,6 +2411,7 @@ MonoBehaviour:
   stages:
   - {fileID: 11400000, guid: 4ef40169b1384af4d88157fee260c6a8, type: 2}
   - {fileID: 11400000, guid: 9b5e885baeab0064cb1fc3cffbfb02d9, type: 2}
+  - {fileID: 11400000, guid: 3a224eb74d607cb4a95ca5a4f0af8a0d, type: 2}
 --- !u!4 &1419752787
 Transform:
   m_ObjectHideFlags: 0

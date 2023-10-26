@@ -78,6 +78,8 @@ public class TypingTest : MonoBehaviour
         {
             if(!StageManager.instance.currentStage.isNonSelectStage)
                 SelectManager.instance.ToggleSelectBtn();
+            else
+                StageManager.instance.NextStage();
             return;
         }
         index++;

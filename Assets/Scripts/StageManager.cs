@@ -23,6 +23,8 @@ public class StageManager : MonoBehaviour
     }
     public void NextStage(string _branchName = "default")
     {
+        if (stageIndex == stages.Count - 1)
+            return;
         stageIndex++;
         currentStage = stages[stageIndex];
         SetBranch(_branchName);
@@ -32,6 +34,17 @@ public class StageManager : MonoBehaviour
     public List<string> GetDialog() => currentStage.GetDialogInStage(_currentBranchInCurrentStage);
     private void SetBranch(string _branchName)
     {
+        if(currentStage.AutoSelectedBranches.Count > 0)
+        {
+            foreach(var autoBranch in currentStage.AutoSelectedBranches)
+            {
+                if (autoBranch.ConditionCheck())
+                {
+                    _branchName = autoBranch.TargetBranchName;
+                    break;
+                }
+            }
+        }
         _currentBranchInCurrentStage = currentStage.GetBranchOnName(_branchName);
     }
 }

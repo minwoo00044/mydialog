@@ -17,7 +17,10 @@ MonoBehaviour:
   _choices:
   - choiceTxt: "\uBBFC\uC9C0\uB294 \uB3CC\uC544\uC11C\uC11C \uD654\uB97C \uB0C8\uB2E4."
     nextBranchName: "\uBBFC\uC9C0\uBD84\uB178"
-    affectedCharacters: []
+    affectedCharacters:
+    - targetChara: {fileID: 11400000, guid: 561996d3339873147831ba14018a1b1d, type: 2}
+      changeState: 00000000
+      changeStateAmount: 02000000
   - choiceTxt: "\uBBFC\uC218\uB294 \uB3C4\uB9DD\uAC14\uB2E4"
     nextBranchName: "\uBBFC\uC218\uBE44\uCC38"
     affectedCharacters: []
